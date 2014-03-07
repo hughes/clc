@@ -89,8 +89,8 @@ class TestParentheses(unittest.TestCase):
         result = self.c.push("(3+4) * (3-2)")
         self.assertEqual(result, 7)
 
-        result = self.c.push("(4*(3*2)*(((9/3)-2*4")
-        self.assertEqual(result, -120)
+        result = self.c.push("(4*(3*2)*(((9/3)+2*4")
+        self.assertEqual(result, 264)
 
 
 class TestExponents(unittest.TestCase):
@@ -100,3 +100,17 @@ class TestExponents(unittest.TestCase):
     def test_basic_exponent(self):
         result = self.c.push("2^2")
         self.assertEqual(result, 4)
+
+    def test_nested_operations(self):
+        result = self.c.push("((3^4*2)+2^3-1)^2")
+        self.assertEqual(result, 28561)
+
+    def test_fractional_exponent(self):
+        result = self.c.push("4^0.5")
+        self.assertEqual(result, 2)
+
+    @unittest.skip("negatives are weird right now")
+    def test_negative_exponent(self):
+        result = self.c.push("4^-1")
+        self.assertEqual(result, 0.25)
+

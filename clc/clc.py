@@ -7,14 +7,12 @@ class Clc():
         self.vars = {}
 
     def push(self, equation):
-        print equation
         self.history.append(equation)
         stack = self.parse(equation)
         result = self.execute(stack)
         return result
 
     def parse(self, equation):
-        print 'parsing', equation
         terms = equation.split('(', 1)
         if len(terms) > 1:
             # assume the parenthesis never closes
@@ -32,10 +30,9 @@ class Clc():
                     break
 
             inner_stack = self.parse(terms[1][:idx])
-            print "inner_stack:", inner_stack
             result = self.execute(inner_stack)
-            print "inner result", result
             return self.parse(terms[0] + str(result) + terms[1][idx + 1:])
+
 
         terms = equation.split('+', 1)
         if len(terms) > 1:
@@ -52,7 +49,11 @@ class Clc():
         terms = equation.split('/', 1)
         if len(terms) > 1:
             return {"divide": [self.parse(t) for t in terms]}
-        print terms
+
+        terms = equation.split('^', 1)
+        if len(terms) > 1:
+            return {"power": [self.parse(t) for t in terms]}
+
         return {"return": float(terms[0])}
 
     def execute(self, stack):
@@ -72,4 +73,7 @@ class Clc():
             elif k == "divide":
                 terms = [self.execute(t) for t in v]
                 result = np.divide(*terms)
+            elif k == "power":
+                terms = [self.execute(t) for t in v]
+                result = np.power(*terms)
         return result
