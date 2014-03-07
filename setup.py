@@ -10,7 +10,7 @@ config = {
     'packages': ['clc'],
     'scripts': [],
     'entry_points': {
-        'clc_scripts': ['clc = clc.main:main']
+        'console_scripts': ['doclc = clc.main:main']
     },
     'name': 'clc',
     'test_suite': 'tests'
