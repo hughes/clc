@@ -2,7 +2,7 @@ import unittest
 import clc
 
 
-class TestSomething(unittest.TestCase):
+class TestBasicInput(unittest.TestCase):
     def setUp(self):
         self.c = clc.Clc()
         pass
@@ -29,10 +29,74 @@ class TestSomething(unittest.TestCase):
         self.assertEqual(self.c.history[-1], input2)
 
     def test_basic_input(self):
-        input1 = "7"
-        result = self.c.push(input1)
-        self.assertEqual(result, [7])
+        result = self.c.push("7")
+        self.assertEqual(result, 7)
 
-        input2 = "2+2"
+    def test_add(self):
+        result = self.c.push("2+2")
+        self.assertEqual(result, 4)
+
+        result = self.c.push("2+3+4")
+        self.assertEqual(result, 9)
+
+    def test_subtract(self):
+        result = self.c.push("5-4")
+        self.assertEqual(result, 1)
+
+        result = self.c.push("8-2+4-3+5")
+        self.assertEqual(result, 12)
+
+    def test_multiply(self):
+        result = self.c.push("3*4")
+        self.assertEqual(result, 12)
+
+        input2 = "4*5+6"
         result = self.c.push(input2)
-        self.assertEqual(result, [4])
+        self.assertEqual(result, 26)
+
+    def test_divide(self):
+        result = self.c.push("12/4")
+        self.assertEqual(result, 3)
+
+        input2 = "4*3/12*6/2"
+        result = self.c.push(input2)
+        self.assertEqual(result, 3)
+
+    def test_order_of_operations(self):
+        result = self.c.push("3*4+8*1-40/8")
+        self.assertEqual(result, 15)
+
+    def test_negative_number(self):
+        result = self.c.push("-3+4")
+        self.assertEqual(result, 1)
+
+
+class TestParentheses(unittest.TestCase):
+    def setUp(self):
+        self.c = clc.Clc()
+
+    def test_basic_input(self):
+        result = self.c.push("(3)")
+        self.assertEqual(result, 3)
+
+        result = self.c.push("(((3)))")
+        self.assertEqual(result, 3)
+
+        result = self.c.push("(3")
+        self.assertEqual(result, 3)
+
+    def test_nested_operations(self):
+        result = self.c.push("(3+4) * (3-2)")
+        self.assertEqual(result, 7)
+
+        result = self.c.push("(4*(3*2)*(((9/3)-2*4")
+        self.assertEqual(result, -120)
+
+
+class TestExponents(unittest.TestCase):
+    def setUp(self):
+        self.c = clc.Clc()
+
+    def test_basic_exponent(self):
+        result = self.c.push("2^2")
+        self.assertEqual(result, 4)
