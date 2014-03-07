@@ -9,6 +9,9 @@ config = {
     'version': '0.1',
     'packages': ['clc'],
     'scripts': [],
+    'entry_points': {
+        'clc_scripts': ['clc = clc.main:main']
+    },
     'name': 'clc',
     'test_suite': 'tests'
 }

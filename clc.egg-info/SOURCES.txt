@@ -1,7 +1,0 @@
-setup.py
-clc/__init__.py
-clc/clc.py
-clc.egg-info/PKG-INFO
-clc.egg-info/SOURCES.txt
-clc.egg-info/dependency_links.txt
-clc.egg-info/top_level.txt

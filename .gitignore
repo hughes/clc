@@ -1,2 +1,5 @@
+clc.egg-info
+build
+dist
 *.swp
 *.pyc
