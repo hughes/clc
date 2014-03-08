@@ -113,4 +113,3 @@ class TestExponents(unittest.TestCase):
     def test_negative_exponent(self):
         result = self.c.push("4^-1")
         self.assertEqual(result, 0.25)
-

@@ -33,7 +33,6 @@ class Clc():
             result = self.execute(inner_stack)
             return self.parse(terms[0] + str(result) + terms[1][idx + 1:])
 
-
         terms = equation.split('+', 1)
         if len(terms) > 1:
             return {"add": [self.parse(t) for t in terms]}
